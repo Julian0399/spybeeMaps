@@ -1,0 +1,46 @@
+@use '../../styles/variables' as *;
+
+.container {
+  position: absolute;
+  bottom: 24px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: $radius;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.btn {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: white;
+  color: $text-dark;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  border-bottom: 1px solid $border;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: #f0f0f0;
+  }
+}
+
+.btnActive {
+  background: #fef3d6;
+  color: $bg-yellow;
+
+  &:hover {
+    background: #fef3d6;
+  }
+}

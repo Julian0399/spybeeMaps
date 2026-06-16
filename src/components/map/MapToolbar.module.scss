@@ -34,7 +34,7 @@
   justify-content: center;
   transition: all 0.15s;
   &:hover {
-    background: darken($bg-yellow, 8%);
+    background: rgba($bg-yellow, 8%);
   }
 }
 

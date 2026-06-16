@@ -5,11 +5,9 @@
   top: calc(#{$header-height} + 6px);
   left: calc(#{$sidebar-width} + 12px);
   right: 6px;
-  bottom: 6px;
+  bottom: 1px;
   border-radius: 20px;
   overflow: hidden;
-  padding-left: 10px;
-  padding-top: 10px;
 }
 
 .map {
@@ -17,6 +15,110 @@
   height: 100%;
 }
 
+.viewToggleContainer {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  background: white;
+  border-radius: $radius-lg;
+  padding: 6px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+  height: 70px;
+}
+
+.viewToggle {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid $border;
+
+  button {
+    padding: 10px 12px;
+    border: none;
+    border-right: 1px solid $border;
+    background: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    color: $text-dark;
+    transition: all 0.15s;
+    font-size: 18px;
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+
+.active {
+  background: $bg-yellow !important;
+  color: white !important;
+}
+
+.toolBtn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: $text-gray;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.15s;
+
+  &:hover {
+    background: #f0f0f0;
+  }
+}
+
+.degree {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $text-dark;
+  padding: 0 4px;
+}
+
+.toggle {
+  width: 36px;
+  height: 20px;
+  border-radius: 10px;
+  background: $border;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    transition: left 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.toggleActive {
+  background: $bg-yellow;
+
+  &::after {
+    left: 18px;
+  }
+}
 
 @media (max-width: $mobile) {
   .mapContainer {
