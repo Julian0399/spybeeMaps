@@ -6,6 +6,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import styles from "./MapView.module.scss";
 import MapToolbar from "./MapToolbar";
 import MapStyles from "./MapStyles";
+import { useIncidentStore } from "@/store/incidentStore";
 
 export default function MapView() {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -15,7 +16,9 @@ export default function MapView() {
   const [currentMapStyle, setCurrentMapStyle] = useState(
     "mapbox://styles/mapbox/streets-v12",
   );
-
+  const { incidents, isCreating, setClickedLocation, setShowCreateModal } =
+    useIncidentStore();
+  const markersRef = useRef<mapboxgl.Marker[]>([]);
   useEffect(() => {
     if (!mapContainer.current || mapRef.current) return;
 
@@ -46,6 +49,86 @@ export default function MapView() {
     });
   }, [mapStyle]);
 
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    markersRef.current.forEach((m) => m.remove());
+    markersRef.current = [];
+
+    incidents.forEach((inc) => {
+      const colors: Record<string, string> = {
+        alta: "#ef4444",
+        media: "#f59e0b",
+        baja: "#22c55e",
+      };
+
+      const el = document.createElement("div");
+    el.style.width = "36px";
+    el.style.height = "36px";
+    el.style.borderRadius = "50%";
+    el.style.background = "#f5a623";
+    el.style.display = "flex";
+    el.style.alignItems = "center";
+    el.style.justifyContent = "center";
+    el.style.cursor = "pointer";
+    el.style.boxShadow = "0 2px 6px rgba(0,0,0,0.3)";
+
+    const icon = document.createElement("span");
+    icon.className = "material-icons-outlined";
+    icon.style.fontSize = "20px";
+    icon.style.color = "#000";
+    icon.textContent = "warning";
+    el.appendChild(icon);
+
+      const popup = new mapboxgl.Popup({ offset: 25, closeButton: true })
+        .setHTML(`
+      <div style="padding: 8px; min-width: 200px">
+        <div style="font-weight: 600; font-size: 14px; margin-bottom: 8px">${inc.title}</div>
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6b7280; margin-bottom: 6px">
+          <span class="material-icons-outlined" style="font-size: 14px">calendar_today</span>
+          ${new Date(inc.dueDate).toLocaleDateString("es-CO", { day: "2-digit", month: "short", year: "numeric" })}
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6b7280; margin-bottom: 8px">
+          <span class="material-icons-outlined" style="font-size: 14px">location_on</span>
+          ${inc.location.details || "Sin detalles de ubicación"}
+        </div>
+      </div>
+    `);
+
+      const marker = new mapboxgl.Marker(el)
+        .setLngLat([inc.location.lng, inc.location.lat])
+        .setPopup(popup)
+        .addTo(map);
+
+      markersRef.current.push(marker);
+    });
+  }, [incidents]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    map.getCanvas().style.cursor = isCreating ? "crosshair" : "";
+  }, [isCreating]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    const handleClick = (e: mapboxgl.MapMouseEvent) => {
+      if (!useIncidentStore.getState().isCreating) return;
+
+      setClickedLocation({ lat: e.lngLat.lat, lng: e.lngLat.lng });
+      setShowCreateModal(true);
+    };
+
+    map.on("click", handleClick);
+
+    return () => {
+      map.off("click", handleClick);
+    };
+  }, [setClickedLocation, setShowCreateModal]);
+
   const handleStyleChange = (style: string, is3D?: boolean) => {
     const map = mapRef.current;
     if (!map) return;
@@ -72,6 +155,7 @@ export default function MapView() {
         currentStyle={currentMapStyle}
         onChangeStyle={handleStyleChange}
       />
+
       <div className={styles.viewToggleContainer}>
         <div className={styles.viewToggle}>
           <button

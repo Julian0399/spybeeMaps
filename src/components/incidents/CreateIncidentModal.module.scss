@@ -1,0 +1,330 @@
+@use '../../styles/variables' as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.modal {
+  background: white;
+  border-radius: $radius-lg;
+  width: 90%;
+  max-width: 1012px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  scrollbar-width: none;         
+  -ms-overflow-style: none;      
+
+  &::-webkit-scrollbar {         
+    display: none;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 0;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 500;
+  }
+}
+
+.closeBtn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  color: $text-gray;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: #f0f0f0;
+  }
+}
+
+.body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid $border;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-dark;
+
+  span {
+    color: #ef4444;
+  }
+}
+.labelAdd {
+  font-size: 20px;
+  font-weight: 600;
+  color: $text-dark;
+
+  span {
+    color: #ef4444;
+  }
+}
+
+.fieldRow {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid $border;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  color: $text-dark;
+  outline: none;
+  transition: border 0.15s;
+
+  &:focus {
+    border-color: $bg-yellow;
+  }
+
+  &::placeholder {
+    color: $text-gray;
+  }
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.select {
+  appearance: none;
+  background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%236b7280'/%3E%3C/svg%3E") no-repeat right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+}
+
+.coords {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid $border;
+  border-radius: 6px;
+  min-height: 42px;
+  align-items: center;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: #f0f0f0;
+  border-radius: 20px;
+  font-size: 12px;
+  color: $text-dark;
+
+  button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    color: $text-gray;
+    line-height: 1;
+    padding: 0;
+  }
+}
+
+.tagInput {
+  border: none;
+  outline: none;
+  font-size: 13px;
+  font-family: inherit;
+  min-width: 100px;
+  padding: 4px 0;
+}
+
+.userChip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: #f0f0f0;
+  border-radius: 20px;
+  font-size: 12px;
+  color: $text-dark;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: none;
+  font-family: inherit;
+}
+
+.userChipActive {
+  background: #fef3d6;
+  color: #c8891a;
+}
+.miniMapWrapper {
+  position: relative;
+  border-radius: $radius;
+  overflow: hidden;
+  border: 1px solid $border;
+}
+
+.miniMap {
+  width: 100%;
+  height: 300px;
+  border-radius: $radius;
+  overflow: hidden;
+  border: 1px solid $border;
+}
+
+.attachments {
+  border: 2px dashed $border;
+  border-radius: $radius;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  color: $text-gray;
+  font-size: 13px;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: $bg-yellow;
+  }
+}
+
+.attachIcon {
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.tabBar {
+  display: flex;
+  border-bottom: 1px solid $border;
+
+  button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    color: $text-gray;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+  }
+}
+
+.tabActive {
+  color: #c8891a !important;
+  border-bottom-color: $bg-yellow !important;
+}
+
+.tabContent {
+  min-height: 40px;
+  color: $text-gray;
+  font-size: 13px;
+  text-align: center;
+  padding: 12px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid $border;
+  background: white;
+  color: $text-dark;
+  transition: all 0.15s;
+
+  &:hover {
+    background: #f0f0f0;
+  }
+}
+
+.btnPrimary {
+  background: $bg-yellow;
+  border-color: $bg-yellow;
+  color: white;
+
+  &:hover {
+    background: darken($bg-yellow, 8%);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.manageBtn {
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid $bg-yellow;
+  background: $bg-yellow;
+  color: $bg-dark;
+  white-space: nowrap;
+
+  &:hover {
+    background: #fef3d6;
+  }
+}
+
+@media (max-width: $mobile) {
+  .modal {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .coords {
+    grid-template-columns: 1fr;
+  }
+}

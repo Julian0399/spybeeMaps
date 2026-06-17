@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { Incident, IncidentFormData } from "@/types/incident";
 import { v4 as uuidv4 } from "uuid";
 
@@ -17,8 +18,9 @@ interface IncidentState {
   addIncident: (data: IncidentFormData) => void;  
 }
 
-export const useIncidentStore = create<IncidentState>((set) => ({
-    
+export const useIncidentStore = create<IncidentState>()(
+  persist(
+    (set) => ({
   incidents: [],
   selectedIncident: null,
   isCreating: false,
@@ -40,7 +42,7 @@ export const useIncidentStore = create<IncidentState>((set) => ({
         {
           ...data,                              
           id: uuidv4(),                         
-          status: "abierta",                    
+          status: "abierto",                    
           createdAt: new Date().toISOString(),   
         },
       ],
@@ -49,4 +51,9 @@ export const useIncidentStore = create<IncidentState>((set) => ({
       isCreating: false,
       clickedLocation: null,
     })),
-}));
+}),
+    {
+      name: "incident-storage",
+    }
+  )
+);

@@ -9,7 +9,6 @@ export default function MapToolbar() {
   return (
     <div className={styles.toolbar}>
       <div className={styles.group}>
-
         <button
           className={styles.btnAdd}
           onClick={() => setIsCreating(!isCreating)}
@@ -17,6 +16,10 @@ export default function MapToolbar() {
         >
           <span className="material-icons-outlined">
             {isCreating ? "close" : "add"}
+          </span>
+
+          <span className={styles.tooltip}>
+            {isCreating ? "Cancelar" : "Crear incidencia"}
           </span>
         </button>
 

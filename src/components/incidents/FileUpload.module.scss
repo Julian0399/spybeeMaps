@@ -1,0 +1,118 @@
+@use '../../styles/variables' as *;
+
+.dropzone {
+  border: 2px dashed $border;
+  border-radius: $radius;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  color: $text-gray;
+  font-size: 13px;
+  transition: border-color 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  &:hover {
+    border-color: $bg-yellow;
+  }
+}
+
+.hint {
+  font-size: 11px;
+  color: $text-gray;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid $border;
+  margin-top: 12px;
+
+  button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    color: $text-gray;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+  }
+}
+
+.tabActive {
+  color: #c8891a !important;
+  border-bottom-color: $bg-yellow !important;
+}
+
+.fileGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  padding: 12px 0;
+  min-height: 60px;
+}
+
+.fileCard {
+  position: relative;
+  border-radius: $radius;
+  overflow: hidden;
+  border: 1px solid $border;
+  background: #fafafa;
+}
+
+.preview {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  display: block;
+}
+
+.fileName {
+  display: block;
+  font-size: 11px;
+  padding: 4px 6px;
+  color: $text-dark;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.removeBtn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.docCard {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid $border;
+  border-radius: $radius;
+  position: relative;
+  grid-column: 1 / -1;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: $text-gray;
+  font-size: 13px;
+  padding: 12px;
+}

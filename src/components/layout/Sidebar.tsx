@@ -22,7 +22,6 @@ export default function Sidebar() {
 
   return (
     <aside className={`${styles.sidebar} ${expanded ? styles.sidebarExpanded : ""}`}>
-      {/* Logo + Toggle */}
       <div className={styles.top}>
         <div className={styles.logo} onClick={() => router.push("/")}>
           SB
