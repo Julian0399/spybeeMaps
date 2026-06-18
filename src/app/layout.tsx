@@ -23,6 +23,7 @@ export default function RootLayout({
     <ClerkProvider localization={esMX}>
       <html lang="es">
         <head>
+          <link rel="icon" href="/favicon.png" type="image/png" />
           <link
             href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
             rel="stylesheet"
