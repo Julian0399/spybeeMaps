@@ -5,14 +5,14 @@ import { usePathname, useRouter } from "next/navigation";
 import styles from "./Sidebar.module.scss";
 
 const navItems = [
-  { icon: "home", path: "/", label: "Inicio" },
+  { icon: "home", path: "#home", label: "Inicio" },
   { icon: "pie_chart", path: "/dashboard", label: "Dashboard" },
   { icon: "location_on", path: "/", label: "Mapa" },
-  { icon: "info", path: "/", label: "Info" },
-  { icon: "schedule", path: "/", label: "Historial" },
-  { icon: "calendar_month", path: "/", label: "Calendario" },
-  { icon: "image", path: "/", label: "Galería" },
-  { icon: "folder", path: "/", label: "Archivos" },
+  { icon: "info", path: "#info", label: "Info" },
+  { icon: "schedule", path: "#history", label: "Historial" },
+  { icon: "calendar_month", path: "#calendar", label: "Calendario" },
+  { icon: "image", path: "#gallery", label: "Galería" },
+  { icon: "folder", path: "#files", label: "Archivos" },
 ];
 
 export default function Sidebar() {
@@ -21,7 +21,9 @@ export default function Sidebar() {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <aside className={`${styles.sidebar} ${expanded ? styles.sidebarExpanded : ""}`}>
+    <aside
+      className={`${styles.sidebar} ${expanded ? styles.sidebarExpanded : ""}`}
+    >
       <div className={styles.top}>
         <div className={styles.logo} onClick={() => router.push("/")}>
           SB
@@ -41,7 +43,13 @@ export default function Sidebar() {
           <button
             key={i}
             className={`${styles.navItem} ${
-              pathname === item.path && i <= 1 ? styles.navItemActive : ""
+              item.path === "/"
+                ? pathname === "/"
+                  ? styles.navItemActive
+                  : ""
+                : pathname.startsWith(item.path)
+                  ? styles.navItemActive
+                  : ""
             }`}
             onClick={() => router.push(item.path)}
             title={item.label}

@@ -1,10 +1,30 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
+import { useState, useRef, useEffect } from "react";
+import { useUser, useClerk } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import styles from "./Header.module.scss";
 
 export default function Header() {
   const { user } = useUser();
+  const { signOut } = useClerk();
+  const router = useRouter();
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSignOut = () => {
+    signOut(() => router.push("/sign-in"));
+  };
 
   return (
     <header className={styles.header}>
@@ -27,19 +47,39 @@ export default function Header() {
           />
         </button>
 
-        <div className={styles.userInfo}>
-          <div className={styles.avatar}>
+        <div className={styles.userMenu} ref={menuRef}>
+          <div
+            className={styles.userInfo}
+            onClick={() => setShowMenu(!showMenu)}
+          >
+            <div className={styles.avatar}>
+              <span className="material-icons-outlined" style={{ fontSize: 18 }}>
+                person
+              </span>
+            </div>
+            <div className={styles.userName}>
+              <span>{user?.fullName || "Usuario"}</span>
+              <span>Superadmin</span>
+            </div>
             <span className="material-icons-outlined" style={{ fontSize: 18 }}>
-              person
+              {showMenu ? "expand_less" : "expand_more"}
             </span>
           </div>
-          <div className={styles.userName}>
-            <span>{user?.fullName || "Usuario"}</span>
-            <span>Superadmin</span>
-          </div>
-          <span className="material-icons-outlined" style={{ fontSize: 18 }}>
-            expand_more
-          </span>
+
+          {showMenu && (
+            <div className={styles.dropdown}>
+              <div className={styles.dropdownUser}>
+                <span>{user?.fullName || "Usuario"}</span>
+                <span>{user?.primaryEmailAddress?.emailAddress || ""}</span>
+              </div>
+              <button className={styles.dropdownItem} onClick={handleSignOut}>
+                <span className="material-icons-outlined" style={{ fontSize: 18 }}>
+                  logout
+                </span>
+                Cerrar sesión
+              </button>
+            </div>
+          )}
         </div>
 
         <button className={styles.iconBtn} title="Ayuda">

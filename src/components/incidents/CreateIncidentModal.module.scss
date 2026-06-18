@@ -327,4 +327,34 @@
   .coords {
     grid-template-columns: 1fr;
   }
+
+  .input,
+  .textarea,
+  .select {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  .fieldRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .manageBtn {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .label {
+    font-size: 12px;
+  }
+
+  .footer {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
 }
